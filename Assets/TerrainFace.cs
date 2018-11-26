@@ -3,14 +3,16 @@ using System.Collections;
 
 public class TerrainFace : MonoBehaviour {
 
+    ShapeGenerator shapeGenerator;
     Mesh mesh;
     int resolution;
     Vector3 localUp;
     Vector3 axisA;
     Vector3 axisB;
 
-    public TerrainFace(Mesh mesh, int res, Vector3 localup)
+    public TerrainFace(ShapeGenerator shapeGenerator, Mesh mesh, int res, Vector3 localup)
     {
+        this.shapeGenerator = shapeGenerator;
         this.mesh = mesh;
         this.resolution = res;
         this.localUp = localup;
@@ -34,7 +36,7 @@ public class TerrainFace : MonoBehaviour {
                 Vector2 percent = new Vector2(x, y) / (resolution - 1);
                 Vector3 locationOnCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
                 Vector3 locationOnSphere = locationOnCube.normalized;
-                vertices[i] = locationOnSphere;
+                vertices[i] = shapeGenerator.CalcPointOnPlanet(locationOnSphere);
 
                 if(x != resolution - 1 && y != resolution - 1)
                 {
