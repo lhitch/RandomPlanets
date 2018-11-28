@@ -22,10 +22,11 @@ public class NoiseFilter{
         {
             float noiseEval = noise.Evaluate(point * frequency + settings.center);
             noiseValue += (noiseEval + 1) * .5f * amplitude;
-            frequency += settings.roughness; //7:28
+            frequency += settings.roughness;
             amplitude *= settings.persistence;
         }
 
+        noiseValue = Mathf.Max(0, noiseValue - settings.minValue);
         return noiseValue * settings.strength;
     }
 }
