@@ -5,4 +5,6 @@ using System.Collections;
 public class ColorSettings : ScriptableObject {
 
     public Color planetColor;
+
+    public Material planetMaterial;
 }
