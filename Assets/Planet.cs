@@ -25,6 +25,10 @@ public class Planet : MonoBehaviour {
 
     void Initialize()
     {
+        // set collider radius to the planet radius
+        SphereCollider collider = GetComponent<SphereCollider>();
+        collider.radius = shapeSettings.planetRadius;
+
         shapeGenerator.UpdateSettings(shapeSettings);
         colorGenerator.UpdateSettings(colorSettings);
         if(meshFilters == null || meshFilters.Length == 0)
@@ -98,10 +102,20 @@ public class Planet : MonoBehaviour {
         }
 
         colorGenerator.UpdateElevation(shapeGenerator.elevationMinMax);
+        // set collider radius to the planet radius
+        SphereCollider collider = GetComponent<SphereCollider>();
+        collider.radius = shapeSettings.planetRadius;
     }
 
     void GenerateColors()
     {
         colorGenerator.UpdateColors();
+        for (int i = 0; i < 6; i++)
+        {
+            if (meshFilters[i].gameObject.activeSelf)
+            {
+                terrainFaces[i].UpdateUVs(colorGenerator);
+            }
+        }
     }
 }
